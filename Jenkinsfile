@@ -1,46 +1,30 @@
 pipeline {
     agent any
+    
     stages {
         stage('Checkout') {
             steps {
-                git 'https://github.com/yourusername/your-repo.git'
+                echo 'Checking out code from repository'
+                git 'https://github.com/logesh-1023/practise.git'
             }
         }
-        stage('Install Dependencies') {
+        stage('Build') {
             steps {
-                script {
-                    sh 'pip install -r requirements.txt'
-                }
+                echo 'Building the project'
+                sh 'echo "Building the project..."'
             }
         }
-        stage('Train Model') {
+        stage('Test') {
             steps {
-                script {
-                    sh 'python train_model.py'
-                }
+                echo 'Running tests'
+                sh 'echo "Running tests..."'
             }
         }
-        stage('Test Model') {
+        stage('Deploy') {
             steps {
-                script {
-                    sh 'python test_model.py'
-                }
+                echo 'Deploying to environment'
+                sh 'echo "Deploying to environment..."'
             }
-        }
-        stage('Deploy to AWS') {
-            steps {
-                script {
-                    sh 'aws s3 cp model.pkl s3://your-bucket-name/model.pkl'
-                }
-            }
-        }
-    }
-    post {
-        success {
-            echo 'Pipeline successfully executed!'
-        }
-        failure {
-            echo 'Pipeline failed!'
         }
     }
 }
