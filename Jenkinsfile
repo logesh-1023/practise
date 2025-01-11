@@ -4,7 +4,7 @@ pipeline {
     stages {
         stage('Checkout') {
             steps {
-                echo 'Checking out code from repository man!'
+                echo 'Checking out code from repository man'
                 git 'https://github.com/logesh-1023/practise.git'
             }
         }
