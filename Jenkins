@@ -1,0 +1,34 @@
+pipeline {
+    agent any
+
+    environment {
+        GIT_REPO_URL = 'git@github.com:logesh-1023/practise.git'
+        // Replace with your Jenkins SSH credential ID
+        SSH_CREDS = 'Logesh'
+    }
+
+    stages {
+        stage('Test Git Connection') {
+            steps {
+                script {
+                    // Using sshagent to use the specified SSH credentials
+                    sshagent([SSH_CREDS]) {
+                        // Clone the repository to the Jenkins workspace
+                        sh """
+                            echo "Testing SSH connection to Git repository..."
+                            git clone ${GIT_REPO_URL} .
+                            echo "Successfully cloned repository!"
+                        """
+                    }
+                }
+            }
+        }
+    }
+
+    post {
+        always {
+            echo "Cleaning up workspace..."
+            cleanWs()
+        }
+    }
+}
